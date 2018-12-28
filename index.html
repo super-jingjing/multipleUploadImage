@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>中国银行</title>
+    <link rel="shortcut icon" href="#" />
+    <meta id="viewport" name="viewport" content="width=750">
+	<meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+	<style>
+		html,body{
+			margin: 0;
+			padding: 0;
+		}
+		ul,li{
+			margin: 0;
+			padding:0;
+		}
+		.image-div{
+			padding: 30px 50px;
+			border-radius: 10px;
+			background-color: #fff;
+			margin: 40px 30px 0;
+		}
+		.image-div .title{
+			height: 70px;
+			line-height: 70px;
+			font-size: 32px;
+			color: #5f5f5f;
+			font-weight: 500;
+		}
+		.upload-div,
+		.show-div{
+			/*margin-top: 20px;*/
+		}
+		.upload-div .upload-ul,
+		.show-div .show-image-ul{
+			letter-spacing: -0.5em;
+		}
+		.upload-div .upload-ul .upload-li,
+		.show-div .show-image-ul .show-image-li{
+			height: 131px;
+			width: 131px;
+			margin-right: 22px;
+			letter-spacing: normal;
+			display: inline-block;
+			margin-top: 20px;
+		}
+		.show-div .show-image-ul .show-image-li img{
+			height: 100%;
+			width: 100%;
+		}
+		.upload-div .upload-ul .upload-li:nth-child(4n),
+		.show-div .show-image-ul .show-image-li:nth-child(4n){
+			margin-right: 0;
+		}
+		.upload-div .upload-ul .upload-li .item{
+			height: 100%;
+			width: 100%;
+			border-radius: 10px;
+			border: 3px dashed #97def1;
+			position: relative;
+		}
+		.upload-div .upload-ul .upload-li .item.image{
+			border: none;
+			font-size: 0;
+		}
+		.upload-div .upload-ul .upload-li .item .delete-image{
+			position: absolute;
+			height: 25px;
+			top: -12.5px;
+			left: -12.5px;
+		}
+		.upload-div .upload-ul .upload-li .item .upload-image{
+			height: 100%;
+			width: 100%;
+			border-radius: 10px;
+			vertical-align:initial;
+		}
+		.img-input-form{
+			position: absolute;
+			height: 131px;
+			width: 131px;
+			z-index: 999;
+		}
+		.img-input-form input{
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 131px;
+			width: 131px;
+		}
+		.photo-span{
+			display: inline-block;
+			position: absolute;
+			height: 32px;
+			width: 39px;
+			border-radius: 5px;
+			border: 3px solid #97def1;
+			left: 50%;
+			top: 50%;
+			margin-top: -16px;
+			margin-left: -19.5px;
+		}
+		.circle-span{
+			display: inline-block;
+			position: absolute;
+			height: 14px;
+			width: 14px;
+			border-radius: 7px;
+			border: 3px solid #97def1;
+			left: 50%;
+			top: 50%;
+			margin-top: -7px;
+			margin-left: -7px;
+		}
+		.circle-solid-span{
+			display: inline-block;
+			position: absolute;
+			height: 4px;
+			width: 4px;
+			border-radius: 2px;
+			background-color: #97def1;
+			left: 50%;
+			top: 50%;
+			margin-top: -10px;
+			margin-left: 9px;
+		}
+		.btm-btn{
+			height: 100px;
+			width: 500px;
+			border-radius: 50px;
+			text-align: center;
+			font-size: 26px;
+			color: #fff;
+			background-color: #ff7e00;
+			margin-left: 125px;
+			margin-top: 40px;
+			margin-bottom: 40px;
+		}
+		
+	</style>
+</head>
+
+<body>
+<div class="content" id="content">
+	<div class="image-div" id="uploadDiv">
+		<div class="title" id="imageTitle">
+			上传图片（最多4张）
+		</div>
+		<div class="upload-div" id="uploadImageDiv">
+			<ul class="upload-ul" id="uploadUL">
+				<!--默认的点击窗口
+					在添加了图片之后，循环在这个前面insert图片的li
+				-->
+				<li class="upload-li" id="uploadBtn">
+					<form class="img-input-form" enctype="multipart/form-data"  style="opacity: 0;">
+						<!-- <input type="file" multiple onchange="selectImage(this)" accept="image/gif, image/jpeg, image/png" id="upload" > -->
+						 <input type="file" accept="image/*" capture="camera" multiple onchange="selectImage(this)" id="upload" >
+					</form>
+					<div class="item">
+						<span class="photo-span"></span>
+						<span class="circle-span"></span>
+						<span class="circle-solid-span"></span>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<script src="assets/js/libs/jquery-2.1.1.min.js"></script>
+<script src="assets/js/libs/yutil-1.0.1.js"></script>
+<script type="text/javascript" charset="utf-8">
+    var uploadImgIndex = 0;
+    var imgArr = [];
+    function init(){
+    	var u = navigator.userAgent;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+        if(isiOS){
+            document.getElementById("upload").removeAttribute("capture","camera");
+        }
+    }
+    function selectImage(imgFile){
+        var allFile = imgFile.files;
+        var totalLen = allFile.length;
+        if(yValidate.checkNotEmpty(imgArr) && imgArr.length>0){
+            totalLen = totalLen + imgArr.length;
+        }
+        if(totalLen>4){
+            alert("只能上传4张图片");
+            return;
+        }
+        for(var i=0;i<allFile.length;i++){
+            var file = allFile[i];
+            if(yValidate.checkNotEmpty(imgArr) && imgArr.length>0){
+                if(imgArr.length <4){
+                    imgArr.push(file);
+                }
+            }else{
+                imgArr.push(file);
+            }
+            //添加一层过滤
+            var rFilter = /^(image\/bmp|image\/gif|image\/jpeg|image\/png|image\/tiff)$/i;
+            if(!rFilter.test(file.type)) {
+                alert("文件格式必须为图片");
+                return;
+            }
+            var reader = new FileReader();
+            reader.readAsDataURL(file); //用文件加载器加载文件
+            //文件加载完成
+            reader.onload = function(e) {
+                //计算最后一个窗口right边距，当时处于第4个的时候，right=0
+                if((allFile.length + 1)%4 == 0){
+                    document.getElementById("uploadBtn").style.marginRight = "0px";
+                }
+                //以下就是将所有上传的图片回显到页面上，如果需要用canvas进行剪裁再回显以下代码就放入到canvas中
+                var li = document.createElement('li');
+                li.id = "upload_"+uploadImgIndex;
+                document.getElementById("uploadBtn").style.display = "";
+                uploadImgIndex++;
+                li.className = "upload-li";
+                li.innerHTML = '<div class="item image">'+
+                    '<img class="upload-image" src="'+e.target.result+'"/>'+
+                    '<img class="delete-image" src="assets/image/image-delete.png"/>'+
+                    '</div>';
+                document.getElementById("uploadUL").insertBefore(li, document.getElementById("uploadBtn"));
+                var uploadArr = document.getElementById("uploadUL").querySelectorAll("li");
+                var len = uploadArr.length ;
+                if(len > 4){
+                    document.getElementById("uploadBtn").style.display = "none";
+                }
+            };
+            reader.onloadend = function(e) {
+                $(".delete-image").off('click');
+                $(".delete-image").on('click',function(){
+                	// alert("dasd");
+                    var li = $(this).parent().parent()[0];
+                    var index = $(".upload-ul .upload-li").index(li);
+                    var liId = li.id;
+                    $("#"+liId).remove();
+                    imgArr.splice(index,1);
+                    document.getElementById("uploadBtn").style.display = "";
+                });
+            }
+        }
+    }
+    
+    function fileUpload(){
+        var param = new FormData();
+        for(var i=0; i<imgArr.length;i++){
+            param.append('file[]', imgArr[i], i);
+        }
+        param.append("orderId", req.id);
+        param.append("userId", bxUserData.id);
+        $("body").mLoading("show");
+        $.ajax({
+            url:url,
+            type:'POST',
+            data:param,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(data){
+                $("body").mLoading("hide");
+                
+            },
+            error:function(){
+                $("body").mLoading("hide");
+                alert(res.description || res.message || "上传失败");
+            }
+        });
+	}
+	init();
+</script>
+</body>
+
+</html>

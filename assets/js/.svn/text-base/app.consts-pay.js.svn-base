@@ -1,0 +1,19 @@
+const _MCH = "wzbc";
+const _REQUEST_OPENID = "_REQUEST_OPENID";
+
+const _WECHAT = "wechat";
+const _ALIPAY = "alipay";
+// const _PAY_STORE_LOGIN = "/api/authenticate";
+// const _PAY_STORE_HOME = "/api/pay/" + _MCH + "/store/cashier";
+// const _PAY_STORE_LIST = "/api/pay/" + _MCH + "/store/collection/list";
+// const _PAY_STORE_DETAIL = "/api/pay/" + _MCH + "/store/collection/detail";
+const _PAY_PRE = "/api/pay/prepay";
+const _PAY_SUCCESS = "/api/pay/" + _MCH + "/success";
+const _PAY_FAIL = "/api/pay/" + _MCH + "/fail";
+const _PAY_ERROR = "/api/pay/" + _MCH + "/error";
+// const _PAY_QUERY_ORDERS_FOR_DAY = "/api/pay/" + _MCH + "/query/orders/day";
+// const _PAY_QUERY_ORDERS_BY_ID = "/api/pay/" + _MCH + "/query/orders/{id}";
+// const _WEB_SOCKET = "/websocket/notify";
+// const _WEB_SOCKET_SUBSCRIBER_CASHIER_ORDER = "/topic/pay/" + _MCH + "/{terminalNo}/order";
+// const _WEB_SOCKET_SUBSCRIBER_CASHIER_TOTAL = "/topic/pay/" + _MCH + "/{terminalNo}/total";
+// const _AUDIO_RECEIV_URI = "/content/audio/receiv.mp3";

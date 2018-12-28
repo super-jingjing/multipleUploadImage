@@ -1,0 +1,32 @@
+const _MCH = "stpl";
+
+const _KEY_ACCESS_TOKEN = "access_token";
+const _KEY_PLATE_ID = "plate_id";
+
+//授权
+const _API_AUTHENTICATE = "/api/authenticate";
+const _API_PROFIT_GRANTS_FOR_CASHIER_QUERY = "/api/profit-grants/" + _MCH + "/cashier/query";
+const _API_PROFIT_GRANTS_FOR_CASHIER_GEN_PROFIT = "/api/profit-grants/" + _MCH + "/cashier/gen/profit";
+//预支付
+const _API_PAY_FOR_MCH_PREPAY = "/api/boc/" + _MCH + "/prepay";
+//交易记录查询
+const _API_PAY_FOR_MCH_QUERY_ORDER = "/api/boc/" + _MCH + "/query/order";
+
+const _APP_FOR_CASHIER_GEN_QRCODE = "/app/" + _MCH + "/cashier/gen/qrcode";
+const _APP_FOR_CLIENT_GRANT = "/app/" + _MCH + "/client/grant";
+//查询指定车牌订单信息
+const _API_CHARGE_FOR_CLIENT_GET = "/api/bluecard/charge";
+
+const _REDIRECT_LOGIN = "/app/cashier-login.html";
+const _REDIRECT_HOME = "/app/cashier-main.html";
+const _REDIRECT_PROFIT_GRANT_LIST = "/app/cashier-profit-grant-list.html";
+const _REDIRECT_PROFIT_GRANT_DETAIL = "/app/cashier-profit-grant-detail.html";
+
+const _SHORTER_EN = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", '<img src="/app/assets/image/input-delete-2.png"/>'];
+const _SHORTER_EN_AND_FIGURE = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+    "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", '<img src="/app/assets/image/input-delete-2.png"/>'
+];
+const _SHORTER_EN_AND_FIGURE_AND_CN = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+    "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+    "港", "澳", "学", "警", '<img src="/app/assets/image/input-delete-2.png"/>'
+];

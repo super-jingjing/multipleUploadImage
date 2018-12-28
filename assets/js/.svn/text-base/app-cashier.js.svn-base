@@ -1,0 +1,81 @@
+/**
+ * Created by creater on 2017/11/3.
+ */
+var socket = new SockJS(_WEB_SOCKET);
+var stompClient = Stomp.over(socket);
+
+/**
+ * 建立成功的回调函数
+ */
+socket.onopen = function () {
+    console.log('open');
+};
+
+/**
+ * 服务器有消息返回的回调函数
+ */
+socket.onmessage = function (e) {
+    console.log('message', e.data);
+};
+
+/**
+ * websocket链接关闭的回调函数
+ */
+socket.onclose = function () {
+    console.log('close');
+};
+
+var terminalNo = "";
+var agent = window.navigator.userAgent;
+if(agent.match(/Android/i) != null)
+{
+    terminalNo = AndroidScript.getTerminalNo();
+}
+else if(agent.match(/iPhone|iPod|iPad/i) != null)
+{
+    terminalNo = getTerminalNo();
+}
+
+/**
+ * 监听服务端通知
+ */
+stompClient.connect({}, function (frame) {
+    stompClient.subscribe(_WEB_SOCKET_SUBSCRIBER_CASHIER_ORDER.replace('{terminalNo}', terminalNo), function (result) { //订阅消息
+        var data = JSON.parse(result.body);
+        if(agent.match(/Android/i) != null)
+        {
+            AndroidScript.doSpeaking(data["speakStr"]);
+        }
+        else if(agent.match(/iPhone|iPod|iPad/i) != null)
+        {
+            doSpeaking(data["speakStr"]);
+        }
+
+    });
+    stompClient.subscribe(_WEB_SOCKET_SUBSCRIBER_CASHIER_TOTAL.replace('{terminalNo}', terminalNo), function (result) { //订阅消息
+        var data = JSON.parse(result.body);
+        if(agent.match(/Android/i) != null)
+        {
+            AndroidScript.updateTotalData(result.body);
+        }
+        else if(agent.match(/iPhone|iPod|iPad/i) != null)
+        {
+            updateTotalData(data);
+        }
+    });
+});
+
+function closeWebsocket()
+{
+    //关闭连接
+    stompClient.disconnect(function () {
+        if(agent.match(/Android/i) != null)
+        {
+            AndroidScript.closeSuccess();
+        }
+        else if(agent.match(/iPhone|iPod|iPad/i) != null)
+        {
+            closeSuccess();
+        }
+    });
+}

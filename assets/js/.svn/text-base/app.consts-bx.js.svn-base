@@ -1,0 +1,10 @@
+const _MCH = "lswgy";
+const _REQUEST_OPENID = "_REQUEST_OPENID";
+const _REQUEST_CHANNEL = "_REQUEST_CHANNEL";
+const _REQUEST_TERMINAL_NO = "_REQUEST_TERMINAL_NO";
+const _REQUEST_STORE_NAME = "_REQUEST_STORE_NAME";
+
+const _BX_USER_DATA = "_BX_USER_DATA";
+const _BX_ORDER_DATA = "_BX_ORDER_DATA";
+const _WECHAT = "wechat";
+const _ALIPAY = "alipay";
